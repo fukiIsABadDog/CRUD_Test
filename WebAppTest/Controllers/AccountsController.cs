@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EF_Models;
 using EFcoreTesting.Models;
+using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow;
 
 namespace WebAppTest.Controllers
 {
@@ -58,13 +59,18 @@ namespace WebAppTest.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AccountID,HolderName,StreetAdress,City,StateOrProvince,Country,ZipCode,Email,AccountTypeID,AccountStandingID,AccountPayments")] Account account)
+        public async Task<IActionResult> Create([Bind("AccountID,HolderName,StreetAdress,City,StateOrProvince,Country,ZipCode,Email,AccountTypeID")] Account account)
         {
+
             if (ModelState.IsValid)
             {
                 _context.Add(account);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                ViewBag.ErrorMessage = $"{account.AccountID}";
             }
             ViewData["AccountTypeID"] = new SelectList(_context.AccountTypes, "AccountTypeID", "AccountTypeID", account.AccountTypeID);
             ViewData["AccountStandingID"] = new SelectList(_context.AccountStandings, "AccountStandingID", "AccountStandingID",account);
