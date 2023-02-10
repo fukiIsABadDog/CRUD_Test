@@ -4,6 +4,7 @@ using EF_Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFcoreTesting.Migrations
 {
     [DbContext(typeof(MaelstromContext))]
-    partial class MaelstromContextModelSnapshot : ModelSnapshot
+    [Migration("20230210200450_AddedPropToAccount")]
+    partial class AddedPropToAccount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,18 +98,6 @@ namespace EFcoreTesting.Migrations
                     b.HasKey("AccountStandingID");
 
                     b.ToTable("AccountStandings");
-
-                    b.HasData(
-                        new
-                        {
-                            AccountStandingID = 1,
-                            Name = "Current"
-                        },
-                        new
-                        {
-                            AccountStandingID = 2,
-                            Name = "NotCurrent"
-                        });
                 });
 
             modelBuilder.Entity("EFcoreTesting.Models.AccountType", b =>
@@ -127,26 +117,6 @@ namespace EFcoreTesting.Migrations
                     b.HasKey("AccountTypeID");
 
                     b.ToTable("AccountTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            AccountTypeID = 1,
-                            Name = "PremiumMonthly",
-                            TermLengthDays = 30
-                        },
-                        new
-                        {
-                            AccountTypeID = 2,
-                            Name = "PremiumYearly",
-                            TermLengthDays = 365
-                        },
-                        new
-                        {
-                            AccountTypeID = 3,
-                            Name = "Trail",
-                            TermLengthDays = 14
-                        });
                 });
 
             modelBuilder.Entity("EFcoreTesting.Models.Fish", b =>

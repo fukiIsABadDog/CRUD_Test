@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using EF_Models;
 using EFcoreTesting.Models;
 
-namespace WebAppTest
+namespace WebAppTest.Controllers
 {
     public class AccountsController : Controller
     {
@@ -46,26 +46,33 @@ namespace WebAppTest
         }
 
         // GET: Accounts/Create
-        public IActionResult Create()
-        {
-            ViewData["AccountTypeID"] = new SelectList(_context.AccountTypes, "AccountTypeID", "AccountTypeID");
-            return View();
-        }
+        //public IActionResult Create()
+        //{
+        //    //ViewData["AccountTypeID"] = new SelectList(_context.AccountTypes, "AccountTypeID", "AccountTypeID");
+        //    //ViewData["AccountStandingID"] = new SelectList(_context.AccountStandings, "AccountStandingID", "AccountStandingID");
+        //    //return View();
+        //}
 
         // POST: Accounts/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AccountID,HolderName,StreetAdress,City,StateOrProvince,Country,ZipCode,Email,AccountTypeID")] Account account)
+        public async Task<IActionResult> Create([Bind("AccountID,HolderName,StreetAdress,City,StateOrProvince,Country,ZipCode,Email,AccountTypeID,AccountStandingID")] Account account)
         {
+            //these 2 lines are just for testing
+            account.AccountTypeID = 1;
+            account.AccountStandingID = 1;
+
             if (ModelState.IsValid)
             {
                 _context.Add(account);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountTypeID"] = new SelectList(_context.AccountTypes, "AccountTypeID", "AccountTypeID", account.AccountTypeID);
+            //ViewData["AccountTypeID"] = new SelectList(_context.AccountTypes, "AccountTypeID", "AccountTypeID", account.AccountTypeID);
+            //ViewData["AccountStandingID"] = new SelectList(_context.AccountStandings, "AccountStandingID", "AccountStandingID",account.AccountStandingID);
+
             return View(account);
         }
 
@@ -155,14 +162,14 @@ namespace WebAppTest
             {
                 _context.Accounts.Remove(account);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool AccountExists(int id)
         {
-          return _context.Accounts.Any(e => e.AccountID == id);
+            return _context.Accounts.Any(e => e.AccountID == id);
         }
     }
 }

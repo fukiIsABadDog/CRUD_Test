@@ -6,6 +6,7 @@ using EFcoreTesting.Migrations;
 using EFcoreTesting.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace EF_Models
 {
@@ -41,11 +42,17 @@ namespace EF_Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //composite key
             modelBuilder.Entity<AccountPayment>()
             .HasKey(ap => new { ap.AccountID, ap.PaymentID });
 
+            //composite key
             modelBuilder.Entity<SiteUser>()
             .HasKey(su => new { su.SiteID, su.UserID });
+
+            //seed data for tests
+            modelBuilder.ApplyConfiguration(new SeedAccountStandings());
+            modelBuilder.ApplyConfiguration(new SeedAccountTypes());
         }
 
 
