@@ -46,32 +46,28 @@ namespace WebAppTest.Controllers
         }
 
         // GET: Accounts/Create
-        //public IActionResult Create()
-        //{
-        //    //ViewData["AccountTypeID"] = new SelectList(_context.AccountTypes, "AccountTypeID", "AccountTypeID");
-        //    //ViewData["AccountStandingID"] = new SelectList(_context.AccountStandings, "AccountStandingID", "AccountStandingID");
-        //    //return View();
-        //}
+        public IActionResult Create()
+        {
+            ViewData["AccountTypeID"] = new SelectList(_context.AccountTypes, "AccountTypeID", "AccountTypeID");
+            ViewData["AccountStandingID"] = new SelectList(_context.AccountStandings, "AccountStandingID", "AccountStandingID");
+            return View();
+        }
 
         // POST: Accounts/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AccountID,HolderName,StreetAdress,City,StateOrProvince,Country,ZipCode,Email,AccountTypeID,AccountStandingID")] Account account)
+        public async Task<IActionResult> Create([Bind("AccountID,HolderName,StreetAdress,City,StateOrProvince,Country,ZipCode,Email,AccountTypeID,AccountStandingID,AccountPayments")] Account account)
         {
-            //these 2 lines are just for testing
-            account.AccountTypeID = 1;
-            account.AccountStandingID = 1;
-
             if (ModelState.IsValid)
             {
                 _context.Add(account);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            //ViewData["AccountTypeID"] = new SelectList(_context.AccountTypes, "AccountTypeID", "AccountTypeID", account.AccountTypeID);
-            //ViewData["AccountStandingID"] = new SelectList(_context.AccountStandings, "AccountStandingID", "AccountStandingID",account.AccountStandingID);
+            ViewData["AccountTypeID"] = new SelectList(_context.AccountTypes, "AccountTypeID", "AccountTypeID", account.AccountTypeID);
+            ViewData["AccountStandingID"] = new SelectList(_context.AccountStandings, "AccountStandingID", "AccountStandingID",account);
 
             return View(account);
         }

@@ -22,7 +22,7 @@ namespace EFcoreTesting.Models
         public AccountStanding AccountStanding { get; set; } = null!;
 
         // Made this nullable because its possible to have an account without a payment. ex: trial account
-        public ICollection<AccountPayment>? AccountPayments{ get; set; } 
+        public ICollection<AccountPayment>? AccountPayments { get; set; } = default;
 
 
   
