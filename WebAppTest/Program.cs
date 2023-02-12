@@ -1,7 +1,9 @@
-using EF_Models;
+global using EFcoreTesting; // need to change this name space name eventually 
+global using EF_Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WebAppTest.Data;
+
 
 var builder = WebApplication.CreateBuilder(args);
 

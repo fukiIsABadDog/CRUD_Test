@@ -4,6 +4,7 @@ using EF_Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFcoreTesting.Migrations
 {
     [DbContext(typeof(MaelstromContext))]
-    partial class MaelstromContextModelSnapshot : ModelSnapshot
+    [Migration("20230212122917_AddedSeedDataForAccounttesting3")]
+    partial class AddedSeedDataForAccounttesting3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,9 +120,6 @@ namespace EFcoreTesting.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccountTypeID"), 1L, 1);
 
-                    b.Property<decimal>("Cost")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -135,21 +134,18 @@ namespace EFcoreTesting.Migrations
                         new
                         {
                             AccountTypeID = 1,
-                            Cost = 12.99m,
                             Name = "PremiumMonthly",
                             TermLengthDays = 30
                         },
                         new
                         {
                             AccountTypeID = 2,
-                            Cost = 129.99m,
                             Name = "PremiumYearly",
                             TermLengthDays = 365
                         },
                         new
                         {
                             AccountTypeID = 3,
-                            Cost = 0m,
                             Name = "Trail",
                             TermLengthDays = 14
                         });

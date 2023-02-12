@@ -13,9 +13,9 @@ namespace EFcoreTesting.Models
         public void Configure(EntityTypeBuilder<AccountType> entity)
         {
             entity.HasData(
-                new AccountType { AccountTypeID = 1, Name = "PremiumMonthly", TermLengthDays = 30 },
-                new AccountType { AccountTypeID = 2, Name = "PremiumYearly", TermLengthDays = 365 },
-                new AccountType { AccountTypeID = 3, Name = "Trail", TermLengthDays = 14 }
+                new AccountType { AccountTypeID = 1, Name = "PremiumMonthly", TermLengthDays = 30, Cost = ((decimal)(12.99)) },
+                new AccountType { AccountTypeID = 2, Name = "PremiumYearly", TermLengthDays = 365, Cost = ((decimal)(129.99)) },
+                new AccountType { AccountTypeID = 3, Name = "Trail", TermLengthDays = 14,  Cost = ((decimal)(0.00)) }
                 ) ;
         }
     }
