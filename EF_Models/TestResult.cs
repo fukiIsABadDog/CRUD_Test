@@ -20,7 +20,9 @@ namespace EFcoreTesting.Models
         public decimal? Nitrite { get; set; }
         public decimal? Ammonia { get; set; }
 
-        public Site? Site { get; set; } 
+        public Site? Site { get; set; } // may be redundant
+        public int UserID { get; set; }
+        public SiteUser? SiteUser { get; set; }
         
         
 

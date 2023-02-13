@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFcoreTesting.Migrations
 {
     [DbContext(typeof(MaelstromContext))]
-    [Migration("20230213144554_MadeAccountPaymentPropNullable")]
-    partial class MadeAccountPaymentPropNullable
+    [Migration("20230213171037_siteCapacityMadeNullable")]
+    partial class siteCapacityMadeNullable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -246,7 +246,7 @@ namespace EFcoreTesting.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SiteID"), 1L, 1);
 
-                    b.Property<int>("Capacity")
+                    b.Property<int?>("Capacity")
                         .HasColumnType("int");
 
                     b.Property<string>("Location")
@@ -465,7 +465,7 @@ namespace EFcoreTesting.Migrations
             modelBuilder.Entity("EFcoreTesting.Models.User", b =>
                 {
                     b.HasOne("EFcoreTesting.Models.Account", "Account")
-                        .WithMany()
+                        .WithMany("Users")
                         .HasForeignKey("AccountID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -476,6 +476,8 @@ namespace EFcoreTesting.Migrations
             modelBuilder.Entity("EFcoreTesting.Models.Account", b =>
                 {
                     b.Navigation("Payments");
+
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("EFcoreTesting.Models.FishType", b =>

@@ -12,12 +12,12 @@ namespace EFcoreTesting.Models
         public DateTime? DateAdded { get; set; }
 
         public int FishTypeID { get; set; }
-        public FishType FishType { get; set; } = null!;
+        public FishType? FishType { get; set; }
 
         public int SiteID { get; set; }
         public Site? Site { get; set; } 
 
-        public byte Image {get; set;} // we may want to host the images on a seperate file server
+        public byte? Image {get; set;} // we may want to host the images on a seperate file server
                                         // in that case we may want to just have the URL here
 
     }

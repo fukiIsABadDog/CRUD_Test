@@ -22,7 +22,8 @@ namespace WebAppTest.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Users.ToListAsync());
+            var maelstromContext = _context.Users.Include(u => u.Account);
+            return View(await maelstromContext.ToListAsync());
         }
 
         // GET: Users/Details/5
@@ -34,6 +35,7 @@ namespace WebAppTest.Controllers
             }
 
             var user = await _context.Users
+                .Include(u => u.Account)
                 .FirstOrDefaultAsync(m => m.UserID == id);
             if (user == null)
             {
@@ -46,6 +48,7 @@ namespace WebAppTest.Controllers
         // GET: Users/Create
         public IActionResult Create()
         {
+            ViewData["AccountID"] = new SelectList(_context.Accounts, "AccountID", "AccountID");
             return View();
         }
 
@@ -54,15 +57,15 @@ namespace WebAppTest.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserID,FirstName,LastName")] User user)
+        public async Task<IActionResult> Create([Bind("UserID,FirstName,LastName,AccountID")] User user)
         {
-            
             if (ModelState.IsValid)
             {
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AccountID"] = new SelectList(_context.Accounts, "AccountID", "AccountID", user.AccountID);
             return View(user);
         }
 
@@ -79,6 +82,7 @@ namespace WebAppTest.Controllers
             {
                 return NotFound();
             }
+            ViewData["AccountID"] = new SelectList(_context.Accounts, "AccountID", "AccountID", user.AccountID);
             return View(user);
         }
 
@@ -87,7 +91,7 @@ namespace WebAppTest.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserID,FirstName,LastName")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("UserID,FirstName,LastName,AccountID")] User user)
         {
             if (id != user.UserID)
             {
@@ -114,6 +118,7 @@ namespace WebAppTest.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AccountID"] = new SelectList(_context.Accounts, "AccountID", "AccountID", user.AccountID);
             return View(user);
         }
 
@@ -126,6 +131,7 @@ namespace WebAppTest.Controllers
             }
 
             var user = await _context.Users
+                .Include(u => u.Account)
                 .FirstOrDefaultAsync(m => m.UserID == id);
             if (user == null)
             {

@@ -57,7 +57,7 @@ namespace WebAppTest.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TestResultID,SiteID,Temperature,Ph,Sality,Alkalinty,Calcium,Magnesium,Phosphate,Nitrate,Nitrite,Ammonia")] TestResult testResult)
+        public async Task<IActionResult> Create([Bind("TestResultID,SiteID,Temperature,Ph,Sality,Alkalinty,Calcium,Magnesium,Phosphate,Nitrate,Nitrite,Ammonia,UserID")] TestResult testResult)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace WebAppTest.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TestResultID,SiteID,Temperature,Ph,Sality,Alkalinty,Calcium,Magnesium,Phosphate,Nitrate,Nitrite,Ammonia")] TestResult testResult)
+        public async Task<IActionResult> Edit(int id, [Bind("TestResultID,SiteID,Temperature,Ph,Sality,Alkalinty,Calcium,Magnesium,Phosphate,Nitrate,Nitrite,Ammonia,UserID")] TestResult testResult)
         {
             if (id != testResult.TestResultID)
             {

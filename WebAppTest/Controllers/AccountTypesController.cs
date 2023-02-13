@@ -22,7 +22,7 @@ namespace WebAppTest.Controllers
         // GET: AccountTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.AccountTypes.ToListAsync());
+              return View(await _context.AccountTypes.ToListAsync());
         }
 
         // GET: AccountTypes/Details/5
@@ -54,7 +54,7 @@ namespace WebAppTest.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AccountTypeID,Name,TermLengthDays")] AccountType accountType)
+        public async Task<IActionResult> Create([Bind("AccountTypeID,Name,TermLengthDays,Cost")] AccountType accountType)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace WebAppTest.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AccountTypeID,Name,TermLengthDays")] AccountType accountType)
+        public async Task<IActionResult> Edit(int id, [Bind("AccountTypeID,Name,TermLengthDays,Cost")] AccountType accountType)
         {
             if (id != accountType.AccountTypeID)
             {
@@ -148,14 +148,14 @@ namespace WebAppTest.Controllers
             {
                 _context.AccountTypes.Remove(accountType);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool AccountTypeExists(int id)
         {
-            return _context.AccountTypes.Any(e => e.AccountTypeID == id);
+          return _context.AccountTypes.Any(e => e.AccountTypeID == id);
         }
     }
 }

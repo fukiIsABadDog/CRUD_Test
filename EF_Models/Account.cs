@@ -21,6 +21,7 @@ namespace EFcoreTesting.Models
         public int AccountStandingID { get; set; } 
         public AccountStanding? AccountStanding { get; set; } 
         public ICollection<Payment>? Payments { get; set; }
+        public ICollection<User>? Users { get; set; }
 
 
   

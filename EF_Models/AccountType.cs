@@ -11,6 +11,6 @@ namespace EFcoreTesting.Models
         public string? Name { get; set; }
         public int TermLengthDays { get; set; }
 
-        public decimal Cost { get; set; } // new prop
+        public decimal Cost { get; set; } // new prop for use in payments
     }
 }

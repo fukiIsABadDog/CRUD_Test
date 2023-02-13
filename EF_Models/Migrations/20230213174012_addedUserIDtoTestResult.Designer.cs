@@ -4,6 +4,7 @@ using EF_Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFcoreTesting.Migrations
 {
     [DbContext(typeof(MaelstromContext))]
-    partial class MaelstromContextModelSnapshot : ModelSnapshot
+    [Migration("20230213174012_addedUserIDtoTestResult")]
+    partial class addedUserIDtoTestResult
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -334,13 +336,10 @@ namespace EFcoreTesting.Migrations
                     b.Property<int>("SiteID")
                         .HasColumnType("int");
 
-                    b.Property<int>("SiteUserID")
+                    b.Property<int?>("SiteUserSiteID")
                         .HasColumnType("int");
 
-                    b.Property<int>("SiteUserSiteID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SiteUserUserID")
+                    b.Property<int?>("SiteUserUserID")
                         .HasColumnType("int");
 
                     b.Property<float?>("Temperature")
@@ -473,9 +472,7 @@ namespace EFcoreTesting.Migrations
 
                     b.HasOne("EFcoreTesting.Models.SiteUser", "SiteUser")
                         .WithMany()
-                        .HasForeignKey("SiteUserSiteID", "SiteUserUserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SiteUserSiteID", "SiteUserUserID");
 
                     b.Navigation("Site");
 

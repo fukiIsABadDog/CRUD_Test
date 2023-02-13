@@ -4,7 +4,7 @@
 
 namespace EFcoreTesting.Migrations
 {
-    public partial class MadeAccountPaymentPropNullable : Migration
+    public partial class addedAccountIDtoUser : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

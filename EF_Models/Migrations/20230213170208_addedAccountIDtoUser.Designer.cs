@@ -4,6 +4,7 @@ using EF_Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFcoreTesting.Migrations
 {
     [DbContext(typeof(MaelstromContext))]
-    partial class MaelstromContextModelSnapshot : ModelSnapshot
+    [Migration("20230213170208_addedAccountIDtoUser")]
+    partial class addedAccountIDtoUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,7 +156,7 @@ namespace EFcoreTesting.Migrations
                     b.Property<int>("FishTypeID")
                         .HasColumnType("int");
 
-                    b.Property<byte?>("Image")
+                    b.Property<byte>("Image")
                         .HasColumnType("tinyint");
 
                     b.Property<string>("NameOrTag")
@@ -244,7 +246,7 @@ namespace EFcoreTesting.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SiteID"), 1L, 1);
 
-                    b.Property<int?>("Capacity")
+                    b.Property<int>("Capacity")
                         .HasColumnType("int");
 
                     b.Property<string>("Location")
@@ -334,26 +336,12 @@ namespace EFcoreTesting.Migrations
                     b.Property<int>("SiteID")
                         .HasColumnType("int");
 
-                    b.Property<int>("SiteUserID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SiteUserSiteID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SiteUserUserID")
-                        .HasColumnType("int");
-
                     b.Property<float?>("Temperature")
                         .HasColumnType("real");
-
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
 
                     b.HasKey("TestResultID");
 
                     b.HasIndex("SiteID");
-
-                    b.HasIndex("SiteUserSiteID", "SiteUserUserID");
 
                     b.ToTable("TestResults");
                 });
@@ -471,21 +459,13 @@ namespace EFcoreTesting.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EFcoreTesting.Models.SiteUser", "SiteUser")
-                        .WithMany()
-                        .HasForeignKey("SiteUserSiteID", "SiteUserUserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Site");
-
-                    b.Navigation("SiteUser");
                 });
 
             modelBuilder.Entity("EFcoreTesting.Models.User", b =>
                 {
                     b.HasOne("EFcoreTesting.Models.Account", "Account")
-                        .WithMany("Users")
+                        .WithMany()
                         .HasForeignKey("AccountID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -496,8 +476,6 @@ namespace EFcoreTesting.Migrations
             modelBuilder.Entity("EFcoreTesting.Models.Account", b =>
                 {
                     b.Navigation("Payments");
-
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("EFcoreTesting.Models.FishType", b =>
