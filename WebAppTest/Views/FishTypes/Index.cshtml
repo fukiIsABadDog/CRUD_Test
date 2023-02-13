@@ -1,0 +1,77 @@
+﻿@model IEnumerable<EFcoreTesting.Models.FishType>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CommonName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScientificName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaxSize)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RecommendedTankSize)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MinTemp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaxTemp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhMin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhMax)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CommonName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScientificName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaxSize)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RecommendedTankSize)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MinTemp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaxTemp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhMin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhMax)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.FishTypeID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.FishTypeID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.FishTypeID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

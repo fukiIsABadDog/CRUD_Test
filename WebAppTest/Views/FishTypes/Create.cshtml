@@ -1,0 +1,68 @@
+﻿@model EFcoreTesting.Models.FishType
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>FishType</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CommonName" class="control-label"></label>
+                <input asp-for="CommonName" class="form-control" />
+                <span asp-validation-for="CommonName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScientificName" class="control-label"></label>
+                <input asp-for="ScientificName" class="form-control" />
+                <span asp-validation-for="ScientificName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaxSize" class="control-label"></label>
+                <input asp-for="MaxSize" class="form-control" />
+                <span asp-validation-for="MaxSize" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RecommendedTankSize" class="control-label"></label>
+                <input asp-for="RecommendedTankSize" class="form-control" />
+                <span asp-validation-for="RecommendedTankSize" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MinTemp" class="control-label"></label>
+                <input asp-for="MinTemp" class="form-control" />
+                <span asp-validation-for="MinTemp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaxTemp" class="control-label"></label>
+                <input asp-for="MaxTemp" class="form-control" />
+                <span asp-validation-for="MaxTemp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhMin" class="control-label"></label>
+                <input asp-for="PhMin" class="form-control" />
+                <span asp-validation-for="PhMin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhMax" class="control-label"></label>
+                <input asp-for="PhMax" class="form-control" />
+                <span asp-validation-for="PhMax" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
