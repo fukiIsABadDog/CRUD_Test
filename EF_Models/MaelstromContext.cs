@@ -23,7 +23,7 @@ namespace EF_Models
         public DbSet<Site> Site => Set<Site>();
 
         public DbSet<Account> Accounts => Set<Account>();
-        public DbSet<AccountPayment> AccountPayments => Set<AccountPayment>();
+       
         public DbSet<AccountStanding> AccountStandings => Set<AccountStanding>();
         public DbSet<AccountType> AccountTypes => Set<AccountType>();
         public DbSet<Payment> Payments => Set<Payment>();
@@ -42,9 +42,7 @@ namespace EF_Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //composite key
-            modelBuilder.Entity<AccountPayment>()
-            .HasKey(ap => new { ap.AccountID, ap.PaymentID });
+           
 
             //composite key
             modelBuilder.Entity<SiteUser>()

@@ -10,7 +10,7 @@ namespace EFcoreTesting.Models
         public int SiteTypeID { get; set; }
         public string Name { get; set; } = null!;
 
-        public ICollection<Site> Sites {get; set;} = null!;
+        public ICollection<Site>? Sites {get; set;}
 
     }
 }

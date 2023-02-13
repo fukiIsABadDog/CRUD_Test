@@ -12,7 +12,8 @@ namespace EFcoreTesting.Models
         public decimal PaymentAmount { get; set; }
         public string? Note { get; set; }
 
-        public ICollection<AccountPayment> AccountPayments { get; set; } = null!;
+        public int AccountID { get; set; }
+        public Account? Account { get; set; }
 
         
         

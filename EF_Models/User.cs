@@ -12,7 +12,7 @@ namespace EFcoreTesting.Models
        public string LastName {get;set;} = null!;
        public ICollection<SiteUser>? SiteUsers { get; set; }
        
-       public Account Account { get; set; } = null!;
+       public Account? Account { get; set; }
 
 
         

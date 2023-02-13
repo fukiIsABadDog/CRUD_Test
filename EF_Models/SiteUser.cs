@@ -10,8 +10,8 @@ namespace EFcoreTesting.Models
         public int UserID { get; set; }
         public int SiteID { get; set; }
 
-        public User User { get; set; } = null!;
-        public Site Site { get; set; } = null!;
+        public User? User { get; set; } 
+        public Site? Site { get; set; }
            
     }
 }

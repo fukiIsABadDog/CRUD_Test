@@ -17,10 +17,10 @@ namespace EFcoreTesting.Models
         public string? Email { get; set; }
 
         public int AccountTypeID { get; set; }
-        public AccountType AccountType { get; set; } = null!;
+        public AccountType? AccountType { get; set; }
         public int AccountStandingID { get; set; } 
-        public AccountStanding AccountStanding { get; set; } = null!;
-        public ICollection<AccountPayment> AccountPayments { get; set; } = null!;
+        public AccountStanding? AccountStanding { get; set; } 
+        public ICollection<Payment>? Payments { get; set; }
 
 
   
