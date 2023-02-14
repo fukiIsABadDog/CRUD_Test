@@ -9,17 +9,17 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace EFcoreTesting.Migrations
+namespace EF_Models.Migrations
 {
     [DbContext(typeof(MaelstromContext))]
-    [Migration("20230213171037_siteCapacityMadeNullable")]
-    partial class siteCapacityMadeNullable
+    [Migration("20230214191549_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.13")
+                .HasAnnotation("ProductVersion", "6.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -156,7 +156,7 @@ namespace EFcoreTesting.Migrations
                     b.Property<int>("FishTypeID")
                         .HasColumnType("int");
 
-                    b.Property<byte>("Image")
+                    b.Property<byte?>("Image")
                         .HasColumnType("tinyint");
 
                     b.Property<string>("NameOrTag")
@@ -336,12 +336,23 @@ namespace EFcoreTesting.Migrations
                     b.Property<int>("SiteID")
                         .HasColumnType("int");
 
+                    b.Property<int?>("SiteUserSiteID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SiteUserUserID")
+                        .HasColumnType("int");
+
                     b.Property<float?>("Temperature")
                         .HasColumnType("real");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
 
                     b.HasKey("TestResultID");
 
                     b.HasIndex("SiteID");
+
+                    b.HasIndex("SiteUserSiteID", "SiteUserUserID");
 
                     b.ToTable("TestResults");
                 });
@@ -459,7 +470,13 @@ namespace EFcoreTesting.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("EFcoreTesting.Models.SiteUser", "SiteUser")
+                        .WithMany()
+                        .HasForeignKey("SiteUserSiteID", "SiteUserUserID");
+
                     b.Navigation("Site");
+
+                    b.Navigation("SiteUser");
                 });
 
             modelBuilder.Entity("EFcoreTesting.Models.User", b =>

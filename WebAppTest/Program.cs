@@ -7,13 +7,15 @@ using WebAppTest.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+//Add services to the container.
+
+// this might give you problems as it needs an actual current connection and not just the string from Justin's machine
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-//testing here
-var connectionString2 = builder.Configuration.GetConnectionString("DefaultConnection");
+//server for DbContext
+var connectionString2 = builder.Configuration.GetConnectionString("Reynolds");
 builder.Services.AddDbContext<MaelstromContext>(options =>
     options.UseSqlServer(connectionString2));
 

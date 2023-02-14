@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace EFcoreTesting.Migrations
+namespace EF_Models.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,7 +29,8 @@ namespace EFcoreTesting.Migrations
                     AccountTypeID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TermLengthDays = table.Column<int>(type: "int", nullable: false)
+                    TermLengthDays = table.Column<int>(type: "int", nullable: false),
+                    Cost = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -54,21 +55,6 @@ namespace EFcoreTesting.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FishTypes", x => x.FishTypeID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Payments",
-                columns: table => new
-                {
-                    PaymentID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PaymentAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Note = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Payments", x => x.PaymentID);
                 });
 
             migrationBuilder.CreateTable(
@@ -124,7 +110,7 @@ namespace EFcoreTesting.Migrations
                     SiteID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Capacity = table.Column<int>(type: "int", nullable: false),
+                    Capacity = table.Column<int>(type: "int", nullable: true),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SiteTypeID = table.Column<int>(type: "int", nullable: false)
                 },
@@ -140,26 +126,24 @@ namespace EFcoreTesting.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AccountPayments",
+                name: "Payments",
                 columns: table => new
                 {
-                    AccountID = table.Column<int>(type: "int", nullable: false),
                     PaymentID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PaymentAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AccountID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AccountPayments", x => new { x.AccountID, x.PaymentID });
+                    table.PrimaryKey("PK_Payments", x => x.PaymentID);
                     table.ForeignKey(
-                        name: "FK_AccountPayments_Accounts_AccountID",
+                        name: "FK_Payments_Accounts_AccountID",
                         column: x => x.AccountID,
                         principalTable: "Accounts",
                         principalColumn: "AccountID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AccountPayments_Payments_PaymentID",
-                        column: x => x.PaymentID,
-                        principalTable: "Payments",
-                        principalColumn: "PaymentID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -194,7 +178,7 @@ namespace EFcoreTesting.Migrations
                     DateAdded = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FishTypeID = table.Column<int>(type: "int", nullable: false),
                     SiteID = table.Column<int>(type: "int", nullable: false),
-                    Image = table.Column<byte>(type: "tinyint", nullable: false)
+                    Image = table.Column<byte>(type: "tinyint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -207,35 +191,6 @@ namespace EFcoreTesting.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Fishs_Site_SiteID",
-                        column: x => x.SiteID,
-                        principalTable: "Site",
-                        principalColumn: "SiteID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TestResults",
-                columns: table => new
-                {
-                    TestResultID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SiteID = table.Column<int>(type: "int", nullable: false),
-                    Temperature = table.Column<float>(type: "real", nullable: true),
-                    Ph = table.Column<float>(type: "real", nullable: true),
-                    Sality = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    Alkalinty = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    Calcium = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    Magnesium = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    Phosphate = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    Nitrate = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    Nitrite = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    Ammonia = table.Column<decimal>(type: "decimal(18,2)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TestResults", x => x.TestResultID);
-                    table.ForeignKey(
-                        name: "FK_TestResults_Site_SiteID",
                         column: x => x.SiteID,
                         principalTable: "Site",
                         principalColumn: "SiteID",
@@ -266,10 +221,61 @@ namespace EFcoreTesting.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_AccountPayments_PaymentID",
-                table: "AccountPayments",
-                column: "PaymentID");
+            migrationBuilder.CreateTable(
+                name: "TestResults",
+                columns: table => new
+                {
+                    TestResultID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SiteID = table.Column<int>(type: "int", nullable: false),
+                    Temperature = table.Column<float>(type: "real", nullable: true),
+                    Ph = table.Column<float>(type: "real", nullable: true),
+                    Sality = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Alkalinty = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Calcium = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Magnesium = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Phosphate = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Nitrate = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Nitrite = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Ammonia = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    UserID = table.Column<int>(type: "int", nullable: false),
+                    SiteUserSiteID = table.Column<int>(type: "int", nullable: true),
+                    SiteUserUserID = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TestResults", x => x.TestResultID);
+                    table.ForeignKey(
+                        name: "FK_TestResults_Site_SiteID",
+                        column: x => x.SiteID,
+                        principalTable: "Site",
+                        principalColumn: "SiteID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TestResults_SiteUsers_SiteUserSiteID_SiteUserUserID",
+                        columns: x => new { x.SiteUserSiteID, x.SiteUserUserID },
+                        principalTable: "SiteUsers",
+                        principalColumns: new[] { "SiteID", "UserID" });
+                });
+
+            migrationBuilder.InsertData(
+                table: "AccountStandings",
+                columns: new[] { "AccountStandingID", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Current" },
+                    { 2, "NotCurrent" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AccountTypes",
+                columns: new[] { "AccountTypeID", "Cost", "Name", "TermLengthDays" },
+                values: new object[,]
+                {
+                    { 1, 12.99m, "PremiumMonthly", 30 },
+                    { 2, 129.99m, "PremiumYearly", 365 },
+                    { 3, 0m, "Trail", 14 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Accounts_AccountStandingID",
@@ -292,6 +298,11 @@ namespace EFcoreTesting.Migrations
                 column: "SiteID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Payments_AccountID",
+                table: "Payments",
+                column: "AccountID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Site_SiteTypeID",
                 table: "Site",
                 column: "SiteTypeID");
@@ -307,6 +318,11 @@ namespace EFcoreTesting.Migrations
                 column: "SiteID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TestResults_SiteUserSiteID_SiteUserUserID",
+                table: "TestResults",
+                columns: new[] { "SiteUserSiteID", "SiteUserUserID" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_AccountID",
                 table: "Users",
                 column: "AccountID");
@@ -315,34 +331,31 @@ namespace EFcoreTesting.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AccountPayments");
-
-            migrationBuilder.DropTable(
                 name: "Fishs");
-
-            migrationBuilder.DropTable(
-                name: "SiteUsers");
-
-            migrationBuilder.DropTable(
-                name: "TestResults");
 
             migrationBuilder.DropTable(
                 name: "Payments");
 
             migrationBuilder.DropTable(
+                name: "TestResults");
+
+            migrationBuilder.DropTable(
                 name: "FishTypes");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "SiteUsers");
 
             migrationBuilder.DropTable(
                 name: "Site");
 
             migrationBuilder.DropTable(
-                name: "Accounts");
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "SiteType");
+
+            migrationBuilder.DropTable(
+                name: "Accounts");
 
             migrationBuilder.DropTable(
                 name: "AccountStandings");

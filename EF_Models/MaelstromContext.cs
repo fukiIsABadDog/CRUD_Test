@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EFcoreTesting.Migrations;
 using EFcoreTesting.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -31,14 +30,15 @@ namespace EF_Models
 
 
 
-
+        //Dont forget to add credentials here!
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=DESKTOP-Q2BNFVU;DataBase=Maelstrom;Integrated Security=True;Connection Timeout=30;Encrypt=False;TrustServerCertificate=false;");
+                optionsBuilder.UseSqlServer("Server=dotnet.reynolds.edu;DataBase=Maelstrom;User Id=;Password=");
+
             }
-         }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace EFcoreTesting.Migrations
+namespace EF_Models.Migrations
 {
     [DbContext(typeof(MaelstromContext))]
     partial class MaelstromContextModelSnapshot : ModelSnapshot
@@ -17,7 +17,7 @@ namespace EFcoreTesting.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.13")
+                .HasAnnotation("ProductVersion", "6.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -334,13 +334,10 @@ namespace EFcoreTesting.Migrations
                     b.Property<int>("SiteID")
                         .HasColumnType("int");
 
-                    b.Property<int>("SiteUserID")
+                    b.Property<int?>("SiteUserSiteID")
                         .HasColumnType("int");
 
-                    b.Property<int>("SiteUserSiteID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SiteUserUserID")
+                    b.Property<int?>("SiteUserUserID")
                         .HasColumnType("int");
 
                     b.Property<float?>("Temperature")
@@ -473,9 +470,7 @@ namespace EFcoreTesting.Migrations
 
                     b.HasOne("EFcoreTesting.Models.SiteUser", "SiteUser")
                         .WithMany()
-                        .HasForeignKey("SiteUserSiteID", "SiteUserUserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SiteUserSiteID", "SiteUserUserID");
 
                     b.Navigation("Site");
 
